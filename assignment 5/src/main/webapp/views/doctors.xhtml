@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Doctor Management</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+
+<h:body class="container mt-4">
+    <h1 class="mb-4">Doctor Management</h1>
+
+    <!-- Form to add or edit doctors -->
+    <h:form id="doctorForm" styleClass="mb-5">
+        <h2>#{doctorBean.editing ? 'Edit Doctor' : 'Add New Doctor'}</h2>
+        <h:messages globalOnly="true" styleClass="alert alert-danger"/>
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <h:outputLabel for="name" value="Name:"/>
+                <h:inputText id="name" value="#{doctorBean.selectedDoctor.name}" required="true"
+                             requiredMessage="Please enter the name." styleClass="form-control"/>
+                <h:message for="name" styleClass="text-danger small"/>
+            </div>
+
+            <div class="col-md-6">
+                <h:outputLabel for="surname" value="Surname:"/>
+                <h:inputText id="surname" value="#{doctorBean.selectedDoctor.surname}" required="true"
+                             requiredMessage="Please enter the surname." styleClass="form-control"/>
+                <h:message for="surname" styleClass="text-danger small"/>
+            </div>
+
+            <div class="col-md-6">
+                <h:outputLabel for="email" value="Email:"/>
+                <h:inputText id="email" value="#{doctorBean.selectedDoctor.email}" required="true"
+                             requiredMessage="Please enter an email." styleClass="form-control"/>
+                <h:message for="email" styleClass="text-danger small"/>
+            </div>
+
+            <div class="col-md-6">
+                <h:outputLabel for="maxPatients" value="Max Patients:"/>
+                <h:inputText id="maxPatients" value="#{doctorBean.selectedDoctor.maxPatients}" required="true"
+                             requiredMessage="Please enter the max number of patients." styleClass="form-control"/>
+                <h:message for="maxPatients" styleClass="text-danger small"/>
+            </div>
+        </div>
+
+        <div class="mt-4 text-center">
+            <h:commandButton value="#{doctorBean.editing ? 'Update Doctor' : 'Add Doctor'}"
+                             action="#{doctorBean.saveDoctor}" styleClass="btn btn-primary me-2">
+                <f:ajax execute="@form" render="doctorForm doctorTableForm"/>
+            </h:commandButton>
+
+            <h:commandButton value="Cancel" action="#{doctorBean.cancelEdit}" rendered="#{doctorBean.editing}"
+                             styleClass="btn btn-secondary">
+                <f:ajax render="doctorForm doctorTableForm"/>
+            </h:commandButton>
+        </div>
+    </h:form>
+
+    <!-- Table of doctors -->
+    <h2>Doctor List</h2>
+    <h:form id="doctorTableForm">
+        <h:dataTable value="#{doctorBean.allDoctors}" var="doctor" styleClass="table table-bordered table-striped">
+            <h:column><f:facet name="header">ID</f:facet>#{doctor.id}</h:column>
+            <h:column><f:facet name="header">Name</f:facet>#{doctor.name}</h:column>
+            <h:column><f:facet name="header">Surname</f:facet>#{doctor.surname}</h:column>
+            <h:column><f:facet name="header">Email</f:facet>#{doctor.email}</h:column>
+            <h:column><f:facet name="header">Max Patients</f:facet>#{doctor.maxPatients}</h:column>
+            <h:column>
+                <f:facet name="header">Actions</f:facet>
+                <div class="d-flex gap-1 justify-content-center">
+                    <h:commandButton value="Edit" action="#{doctorBean.editDoctor(doctor)}"
+                                     styleClass="btn btn-warning btn-sm">
+                        <f:ajax render="doctorForm"/>
+                    </h:commandButton>
+                    <h:commandButton value="Delete" action="#{doctorBean.deleteDoctor(doctor.id)}"
+                                     styleClass="btn btn-danger btn-sm"
+                                     onclick="return confirm('Are you sure you want to delete this doctor?');">
+                        <f:ajax render="doctorForm doctorTableForm"/>
+                    </h:commandButton>
+                </div>
+            </h:column>
+        </h:dataTable>
+        <div class="mt-4">
+            <h:commandLink value="Back to Patients" action="patient?faces-redirect=true" styleClass="btn btn-secondary"/>
+        </div>
+    </h:form>
+
+</h:body>
+</html>
