@@ -1,0 +1,18 @@
+# IDEs e Editores
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+
+# Ficheiros compilados Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Logs e Ficheiros de Sistema (OS)
+*.log
+.DS_Store
+Thumbs.db
