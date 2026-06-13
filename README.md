@@ -2,7 +2,7 @@
 
 An N-Tier enterprise architecture developed for clinical management, utilizing the full Jakarta EE (Java EE) stack. This project implements distributed systems design patterns, asynchronous background processing, and robust data persistence.
 
-**Academic Context:** Developed during the Master's in Software Engineering (Erasmus+ Exchange at Univerza v Mariboru). Graded 20/20.
+**Academic Context:** Developed during the Bachelor's in Software Engineering (Erasmus+ Exchange at Univerza v Mariboru). Graded 20/20.
 
 ## System Architecture & Modules
 
